@@ -3,6 +3,7 @@ import encodings
 from esphome import automation
 import esphome.codegen as cg
 from esphome.components import esp32_ble
+from esphome.components.const import CONF_DESCRIPTION, CONF_MANUFACTURER
 from esphome.components.esp32 import request_bluetooth
 from esphome.components.esp32_ble import BTLoggers, bt_uuid
 import esphome.config_validation as cv
@@ -38,12 +39,10 @@ CONF_ADVERTISE = "advertise"
 CONF_APPEARANCE = "appearance"
 CONF_BROADCAST = "broadcast"
 CONF_CHARACTERISTICS = "characteristics"
-CONF_DESCRIPTION = "description"
 CONF_DESCRIPTORS = "descriptors"
 CONF_ENDIANNESS = "endianness"
 CONF_FIRMWARE_VERSION = "firmware_version"
 CONF_INDICATE = "indicate"
-CONF_MANUFACTURER = "manufacturer"
 CONF_MANUFACTURER_DATA = "manufacturer_data"
 CONF_MAX_CLIENTS = "max_clients"
 CONF_ON_NUMERIC_COMPARISON_REQUEST = "on_numeric_comparison_request"
@@ -636,7 +635,7 @@ async def to_code(config):
     cg.add(parent.advertising_set_appearance(config[CONF_APPEARANCE]))
     cg.add(var.set_max_clients(config[CONF_MAX_CLIENTS]))
     # Only advertise for the server itself when the configuration gives clients something to
-    # find. A server that is auto-loaded purely to host a runtime service (esp32_improv) stays
+    # find. A server that is auto-loaded purely to host a runtime service (improv_ble) stays
     # silent until that service asks for advertising.
     cg.add(
         var.set_advertising_required(
